@@ -1,24 +1,27 @@
 {
-    "name": "vendor_slug/package_slug",
-    "description": ":package_description",
+    "name": "spatie/laravel-google-cloud-storage",
+    "description": "Google Cloud Storage filesystem driver for Laravel",
     "keywords": [
-        ":vendor_name",
+        "spatie",
         "laravel",
-        "package_slug"
+        "laravel-google-cloud-storage"
     ],
-    "homepage": "https://github.com/vendor_slug/package_slug",
+    "homepage": "https://github.com/spatie/laravel-google-cloud-storage",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Alex Vanderbist",
+            "email": "alex@spatie.be",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.0",
-        "spatie/laravel-package-tools": "^1.4.3",
-        "illuminate/contracts": "^8.37"
+        "illuminate/contracts": "^8.37",
+        "illuminate/filesystem": "^8.0",
+        "illuminate/support": "^8.0",
+        "league/flysystem-cached-adapter": "^1.0",
+        "spatie/flysystem-google-cloud-storage": "^0.0.3"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",
@@ -30,13 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Spatie\\GoogleCloudStorage\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Spatie\\GoogleCloudStorage\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -50,10 +52,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Spatie\\GoogleCloudStorage\\GoogleCloudStorageServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\SkeletonFacade"
+                "GoogleCloudStorage": "Spatie\\GoogleCloudStorage\\GoogleCloudStorageFacade"
             }
         }
     },

@@ -1,25 +1,17 @@
-# :package_description
+# Google Cloud Storage filesystem driver for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/vendor_slug/package_slug.svg?style=flat-square)](https://packagist.org/packages/vendor_slug/package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/vendor_slug/package_slug/run-tests?label=tests)](https://github.com/vendor_slug/package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/vendor_slug/package_slug/Check%20&%20fix%20styling?label=code%20style)](https://github.com/vendor_slug/package_slug/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/vendor_slug/package_slug.svg?style=flat-square)](https://packagist.org/packages/vendor_slug/package_slug)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-google-cloud-storage.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-cloud-storage)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-google-cloud-storage/Tests/main?label=tests)](https://github.com/spatie/laravel-google-cloud-storage/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-google-cloud-storage/Check%20&%20fix%20styling/main?label=code%20style)](https://github.com/spatie/laravel-google-cloud-storage/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-google-cloud-storage.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-cloud-storage)
 
 ---
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
 
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this skeleton
-2. Run "./configure-skeleton.sh" to run a script that will replace all placeholders throughout all the files
-3. Remove this block of text.
-4. Have fun creating your package.
-5. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Google Cloud Storage filesystem driver for Laravel
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-google-cloud-storage.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-google-cloud-storage)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
@@ -30,34 +22,112 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require vendor_slug/package_slug
+composer require spatie/laravel-google-cloud-storage
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --provider="VendorName\Skeleton\SkeletonServiceProvider" --tag="package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-```bash
-php artisan vendor:publish --provider="VendorName\Skeleton\SkeletonServiceProvider" --tag="package_slug-config"
-```
-
-This is the contents of the published config file:
+Next, add a new disk to your `filesystems.php` config:
 
 ```php
-return [
-];
+'gcs' => [
+    'driver' => 'gcs',
+    'project_id' => env('GOOGLE_CLOUD_PROJECT_ID', 'your-project-id'),
+    'key_file_path' => env('GOOGLE_CLOUD_KEY_FILE', null), // optional: /path/to/service-account.json
+    'key_file' => [], // optional: Array of data that substitutes the .json file (see below)
+    'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET', 'your-bucket'),
+    'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', null), // optional: /default/path/to/apply/in/bucket
+    'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null), // see: Public URLs below
+    'visibility' => 'public', // optional: public|private
+    'metadata' => ['cacheControl'=> 'public,max-age=86400'], // optional: default metadata
+],
 ```
 
 ## Usage
 
 ```php
-$skeleton = new VendorName\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+$disk = Storage::disk('gcs');
+
+$disk->put('avatars/1', $fileContents);
+$exists = $disk->exists('file.jpg');
+$time = $disk->lastModified('file1.jpg');
+$disk->copy('old/file1.jpg', 'new/file1.jpg');
+$disk->move('old/file1.jpg', 'new/file1.jpg');
+$url = $disk->url('folder/my_file.txt');
+$url = $disk->temporaryUrl('folder/my_file.txt', now()->addMinutes(30));
+$disk->setVisibility('folder/my_file.txt', 'public');
 ```
+
+See https://laravel.com/docs/master/filesystem for full list of available functionality.
+
+### Authentication
+
+The Google Client uses a few methods to determine how it should authenticate with the Google API.
+
+1. If you specify a path in the key `key_file` in  disk config, that json credentials file will be used.
+2. If the `GOOGLE_APPLICATION_CREDENTIALS` env var is set, it will use that.
+   ```php
+   putenv('GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json');
+   ```
+3. It will then try load the key file from a 'well known path':
+    * windows: %APPDATA%/gcloud/application_default_credentials.json
+    * others: $HOME/.config/gcloud/application_default_credentials.json
+
+4. If running in **Google App Engine**, the built-in service account associated with the application will be used.
+5. If running in **Google Compute Engine**, the built-in service account associated with the virtual machine instance will be used.
+6. If you want to authenticate directly without using a json file, you can specify an array for `key_file` in disk config with this data:
+    ```php
+    'key_file' => [
+        'type' => env('GOOGLE_CLOUD_ACCOUNT_TYPE'),
+        'private_key_id' => env('GOOGLE_CLOUD_PRIVATE_KEY_ID'),
+        'private_key' => env('GOOGLE_CLOUD_PRIVATE_KEY'),
+        'client_email' => env('GOOGLE_CLOUD_CLIENT_EMAIL'),
+        'client_id' => env('GOOGLE_CLOUD_CLIENT_ID'),
+        'auth_uri' => env('GOOGLE_CLOUD_AUTH_URI'),
+        'token_uri' => env('GOOGLE_CLOUD_TOKEN_URI'),
+        'auth_provider_x509_cert_url' => env('GOOGLE_CLOUD_AUTH_PROVIDER_CERT_URL'),
+        'client_x509_cert_url' => env('GOOGLE_CLOUD_CLIENT_CERT_URL'),
+    ],
+    ```
+
+### Public URLs
+
+The adapter implements a `getUrl($path)` method which returns a public url to a file.
+>**Note:** Method available for Laravel 5.2 and higher. If used on 5.1, it will throw an exception.
+
+```php
+$disk = Storage::disk('gcs');
+$url = $disk->url('folder/my_file.txt');
+// http://storage.googleapis.com/bucket-name/folder/my_file.txt
+```
+
+If you configure a `path_prefix` in your config:
+```php
+$disk = Storage::disk('gcs');
+$url = $disk->url('folder/my_file.txt');
+// http://storage.googleapis.com/bucket-name/path-prefix/folder/my_file.txt
+```
+
+If you configure a custom `storage_api_uri` in your config:
+```php
+$disk = Storage::disk('gcs');
+$url = $disk->url('folder/my_file.txt');
+// http://your-custom-domain.com/bucket-name/path-prefix/folder/my_file.txt
+```
+
+For a custom domain (storage api uri), you will need to configure a CNAME DNS entry pointing to `storage.googleapis.com`.
+
+Please see https://cloud.google.com/storage/docs/xml-api/reference-uris#cname for further instructions.
+
+### Temporary / Signed URLs
+
+With the latest adapter versions, you can easily generate a signed URLs for files that are not publicly visible by default.
+
+```php
+$disk = Storage::disk('gcs');
+$url = $disk->temporaryUrl('folder/my_file.txt', now()->addMinutes(30));
+// https://storage.googleapis.com/test-bucket/folder/my_file.txt?GoogleAccessId=test-bucket%40test-gcp.iam.gserviceaccount.com&Expires=1571151576&Signature=tvxN1OS1txkWAUF0cCR3FWK%seRZXtFu42%04%YZACYL2zFQxA%uwdGEmdO1KgsHR3vBF%I9KaEzPbl4b7ic2IWUuo8Jh3IoZFqdTQec3KypjDtt%02DGwm%OO6pWDVV421Yp4z520%o5oMqGBtV8B3XmjW2PH76P3uID2QY%AlFxn23oE9PBoM2wXr8pDXhMPwZNJ0FtckSc26O8PmfVsG7Jvln%CQTU57IFyB7JnNxz5tQpc2hPTHbCGrcxVPEISvdOamW3I%83OsXr5raaYYBPcuumDnAmrK%cyS9%Ky2fL2B2shFO2cz%KRu79DBPqtnP2Zf1mJWBTwxVUCK2jxEEYcXBXtdOszIvlI6%tp2XfVwYxLNFU
+```
+
+Please see https://cloud.google.com/storage/docs/access-control/signed-urls and https://laravel.com/docs/6.x/filesystem for more info.
 
 ## Testing
 
@@ -79,7 +149,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Alex Vanderbist](https://github.com/alexvanderbist)
 - [All Contributors](../../contributors)
 
 ## License
