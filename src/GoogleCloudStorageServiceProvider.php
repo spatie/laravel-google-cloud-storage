@@ -2,16 +2,16 @@
 
 namespace Spatie\GoogleCloudStorage;
 
-use Illuminate\Support\Arr;
-use Illuminate\Filesystem\Cache;
-use League\Flysystem\Cached\CacheInterface;
-use League\Flysystem\Filesystem;
-use League\Flysystem\AdapterInterface;
-use Illuminate\Support\ServiceProvider;
 use Google\Cloud\Storage\StorageClient;
-use League\Flysystem\Cached\CachedAdapter;
+use Illuminate\Filesystem\Cache;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Support\Arr;
+use Illuminate\Support\ServiceProvider;
+use League\Flysystem\AdapterInterface;
+use League\Flysystem\Cached\CachedAdapter;
+use League\Flysystem\Cached\CacheInterface;
 use League\Flysystem\Cached\Storage\Memory as MemoryStore;
+use League\Flysystem\Filesystem;
 use Spatie\GoogleCloudStorageAdapter\GoogleCloudStorageAdapter;
 
 class GoogleCloudStorageServiceProvider extends ServiceProvider
@@ -53,7 +53,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         return new Filesystem($adapter, count($config) > 0 ? $config : null);
     }
 
-    protected function createCacheStore(array|bool $config): CacheInterface
+    protected function createCacheStore(array | bool $config): CacheInterface
     {
         if ($config === true) {
             return new MemoryStore();
