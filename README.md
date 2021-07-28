@@ -7,7 +7,14 @@
 
 ---
 
-Google Cloud Storage filesystem driver for Laravel
+Google Cloud Storage filesystem driver for Laravel.
+
+This started as a fork from [Superbalist/laravel-google-cloud-storage](https://github.com/Superbalist/laravel-google-cloud-storage). Changes include:
+
+- Laravel 8 and PHP 8 only support
+- Merging some long overdue PRs
+- Re-wrote the service provider
+- Basically only the readme is left from the fork :shrug:
 
 ## Support us
 
@@ -149,6 +156,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
+- [Superbalist](https://github.com/Superbalist) for the original GCS adapter package
 - [Alex Vanderbist](https://github.com/alexvanderbist)
 - [All Contributors](../../contributors)
 
