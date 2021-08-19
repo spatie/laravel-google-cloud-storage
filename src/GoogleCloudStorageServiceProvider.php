@@ -66,7 +66,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         );
     }
 
-    private function createClient(array $config): StorageClient
+    protected function createClient(array $config): StorageClient
     {
         $options = [];
 
