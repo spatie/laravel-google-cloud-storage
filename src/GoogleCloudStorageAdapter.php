@@ -11,6 +11,7 @@ use League\Flysystem\Visibility;
 class GoogleCloudStorageAdapter extends BaseAdapter
 {
     protected string $storageApiUrl;
+
     public function __construct(
         Bucket $bucket,
         string $prefix = '',

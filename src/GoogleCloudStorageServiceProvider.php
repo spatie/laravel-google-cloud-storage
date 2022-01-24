@@ -27,7 +27,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
             'visibility',
             'disable_asserts',
             'storage_api_uri',
-            'metadata'
+            'metadata',
         ]);
         $adapter = $this->createAdapter($config);
 
