@@ -7,7 +7,8 @@ use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
-use League\Flysystem\Filesystem;
+use League\Flysystem\Filesystem as Flysystem;
+use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as GCSAdapter;
 use League\Flysystem\Visibility;
 
 class GoogleCloudStorageServiceProvider extends ServiceProvider
@@ -15,30 +16,31 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     public function boot()
     {
         Storage::extend('gcs', function ($_app, $config) {
-            return $this->createFilesystemAdapter($config);
+            $config = Arr::only($config, [
+                'bucket',
+                'path_prefix',
+                'visibility',
+                'disable_asserts',
+                'apiEndpoint',
+                'metadata',
+            ]);
+
+            $client = $this->createClient($config);
+            $adapter = $this->createAdapter($client, $config);
+
+            return new GoogleCloudStorageAdapter(
+                new Flysystem($adapter, $config),
+                $adapter,
+                $config,
+                $client,
+            );
         });
     }
 
-    protected function createFilesystemAdapter(array $config): FilesystemAdapter
+    protected function createAdapter(StorageClient $client, array $config): GCSAdapter
     {
-        $config = Arr::only($config, [
-            'bucket',
-            'path_prefix',
-            'visibility',
-            'disable_asserts',
-            'storage_api_uri',
-            'metadata',
-        ]);
-        $adapter = $this->createAdapter($config);
-
-        return new FilesystemAdapter(new Filesystem($adapter, $config), $adapter, $config);
-    }
-
-    protected function createAdapter(array $config): GoogleCloudStorageAdapter
-    {
-        $storageClient = $this->createClient($config);
-        $bucket = $storageClient->bucket(Arr::get($config, 'bucket'));
-        $pathPrefix = Arr::get($config, 'path_prefix');
+        $bucket = $client->bucket(Arr::get($config, 'bucket'));
+        $pathPrefix = Arr::get($config, 'pathPrefix');
         $visibility = Arr::get($config, 'visibility');
         $defaultVisibility = in_array(
             $visibility,
@@ -48,9 +50,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
             ]
         ) ? $visibility : Visibility::PRIVATE;
 
-        $storageApiUri = Arr::get($config, 'storage_api_uri');
-
-        return new GoogleCloudStorageAdapter($bucket, $pathPrefix, null, $defaultVisibility, $storageApiUri);
+        return new GCSAdapter($bucket, $pathPrefix, null, $defaultVisibility);
     }
 
     protected function createClient(array $config): StorageClient
