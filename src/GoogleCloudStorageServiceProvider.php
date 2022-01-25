@@ -18,7 +18,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         Storage::extend('gcs', function ($_app, $config) {
             $config = Arr::only($config, [
                 'bucket',
-                'path_prefix',
+                'pathPrefix',
                 'visibility',
                 'disable_asserts',
                 'apiEndpoint',
