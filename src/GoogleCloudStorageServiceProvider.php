@@ -25,9 +25,9 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
                 'root',
             ]);
 
-            if (Arr::has($config, 'pathPrefix') && !Arr::has($config, 'root')) {
+            if (Arr::has($config, 'pathPrefix') && ! Arr::has($config, 'root')) {
                 Arr::set($config, 'root', Arr::get($config, 'pathPrefix'));
-            } elseif (Arr::has($config, 'root') && !Arr::has($config, 'pathPrefix')) {
+            } elseif (Arr::has($config, 'root') && ! Arr::has($config, 'pathPrefix')) {
                 Arr::set($config, 'pathPrefix', Arr::get($config, 'root'));
             }
 
