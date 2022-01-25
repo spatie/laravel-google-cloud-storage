@@ -16,20 +16,21 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     {
         Storage::extend('gcs', function ($_app, $config) {
             $config = Arr::only($config, [
-                'bucket',
+                'project_id',
+                'key_file',
+                'key_file_path',
+                'projectId',
+                'keyFile',
+                'keyFilePath',
+                'path_prefix',
                 'pathPrefix',
+                'bucket',
                 'visibility',
-                'disable_asserts',
                 'apiEndpoint',
                 'metadata',
-                'root',
             ]);
 
-            if (Arr::has($config, 'pathPrefix') && ! Arr::has($config, 'root')) {
-                Arr::set($config, 'root', Arr::get($config, 'pathPrefix'));
-            } elseif (Arr::has($config, 'root') && ! Arr::has($config, 'pathPrefix')) {
-                Arr::set($config, 'pathPrefix', Arr::get($config, 'root'));
-            }
+            $config += ['version' => 'v2'];
 
             $client = $this->createClient($config);
             $adapter = $this->createAdapter($client, $config);
@@ -46,7 +47,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     protected function createAdapter(StorageClient $client, array $config): GCSAdapter
     {
         $bucket = $client->bucket(Arr::get($config, 'bucket'));
-        $pathPrefix = Arr::get($config, 'pathPrefix');
+        $pathPrefix = Arr::get($config, 'pathPrefix', Arr::get($config, 'path_prefix'));
         $visibility = Arr::get($config, 'visibility');
         $defaultVisibility = in_array(
             $visibility,
@@ -63,15 +64,15 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     {
         $options = [];
 
-        if ($keyFilePath = Arr::get($config, 'key_file_path')) {
+        if ($keyFilePath = Arr::get($config, 'keyFilePath', Arr::get($config, 'key_file_path'))) {
             $options['keyFilePath'] = $keyFilePath;
         }
 
-        if ($keyFile = Arr::get($config, 'key_file')) {
+        if ($keyFile = Arr::get($config, 'keyFile', Arr::get($config, 'key_file'))) {
             $options['keyFile'] = $keyFile;
         }
 
-        if ($projectId = Arr::get($config, 'project_id')) {
+        if ($projectId = Arr::get($config, 'projectId', Arr::get($config, 'project_id'))) {
             $options['projectId'] = $projectId;
         }
 
