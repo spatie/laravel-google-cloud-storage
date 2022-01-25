@@ -14,7 +14,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Storage::extend('gcs', function ($app, $config) {
+        Storage::extend('gcs', function ($_app, $config) {
             return $this->createFilesystemAdapter($config);
         });
     }
