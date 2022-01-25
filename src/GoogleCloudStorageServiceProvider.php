@@ -3,7 +3,6 @@
 namespace Spatie\GoogleCloudStorage;
 
 use Google\Cloud\Storage\StorageClient;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
