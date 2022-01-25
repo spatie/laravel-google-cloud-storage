@@ -22,7 +22,14 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
                 'disable_asserts',
                 'apiEndpoint',
                 'metadata',
+                'root',
             ]);
+
+            if (Arr::has($config, 'pathPrefix') && !Arr::has($config, 'root')) {
+                Arr::set($config, 'root', Arr::get($config, 'pathPrefix'));
+            } elseif (Arr::has($config, 'root') && !Arr::has($config, 'pathPrefix')) {
+                Arr::set($config, 'pathPrefix', Arr::get($config, 'root'));
+            }
 
             $client = $this->createClient($config);
             $adapter = $this->createAdapter($client, $config);
