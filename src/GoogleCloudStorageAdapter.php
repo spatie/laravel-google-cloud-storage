@@ -8,15 +8,18 @@ use Google\Cloud\Storage\StorageClient;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use League\Flysystem\FilesystemOperator;
-use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as GCSAdapter;
+use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudAdapter;
 
+/**
+ * Ignore missing interface methods. They are due to a @mixin annotation in FilesystemAdapter.
+ */
 class GoogleCloudStorageAdapter extends FilesystemAdapter
 {
     protected StorageClient $client;
 
     public function __construct(
         FilesystemOperator $driver,
-        GCSAdapter $adapter,
+        FlysystemGoogleCloudAdapter $adapter,
         array $config,
         StorageClient $client
     ) {
@@ -55,24 +58,6 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
     public function temporaryUrl($path, $expiration, array $options = [])
     {
         return $this->getBucket()->object($path)->signedUrl($expiration, $options);
-
-//        $command = $this->client->getCommand('GetObject', array_merge([
-//            'Bucket' => $this->config['bucket'],
-//            'Key' => $this->prefixer->prefixPath($path),
-//        ], $options));
-//
-//        $uri = $this->client->createPresignedRequest(
-//            $command, $expiration
-//        )->getUri();
-//
-//        // If an explicit base URL has been set on the disk configuration then we will use
-//        // it as the base URL instead of the default path. This allows the developer to
-//        // have full control over the base path for this filesystem's generated URLs.
-//        if (isset($this->config['temporary_url'])) {
-//            $uri = $this->replaceBaseUrl($uri, $this->config['temporary_url']);
-//        }
-//
-//        return (string) $uri;
     }
 
     private function getBucket(): Bucket
