@@ -29,7 +29,7 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-google-cloud-storage
+composer require spatie/laravel-google-cloud-storage:^1.0
 ```
 
 Next, add a new disk to your `filesystems.php` config:
