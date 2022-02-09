@@ -7,7 +7,7 @@
 
 ---
 
-Google Cloud Storage filesystem driver for Laravel.
+Google Cloud Storage filesystem driver for Laravel 8 (using Flysystem v1).
 
 This started as a fork from [Superbalist/laravel-google-cloud-storage](https://github.com/Superbalist/laravel-google-cloud-storage). Changes include:
 
