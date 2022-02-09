@@ -3,82 +3,76 @@
 namespace Spatie\GoogleCloudStorage;
 
 use Google\Cloud\Storage\StorageClient;
-use Illuminate\Filesystem\Cache;
-use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
-use League\Flysystem\AdapterInterface;
-use League\Flysystem\Cached\CachedAdapter;
-use League\Flysystem\Cached\CacheInterface;
-use League\Flysystem\Cached\Storage\Memory as MemoryStore;
-use League\Flysystem\Filesystem;
-use Spatie\GoogleCloudStorageAdapter\GoogleCloudStorageAdapter;
+use League\Flysystem\Filesystem as Flysystem;
+use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as GCSAdapter;
+use League\Flysystem\Visibility;
 
 class GoogleCloudStorageServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $factory = $this->app->make('filesystem');
+        Storage::extend('gcs', function ($_app, $config) {
+            $config = Arr::only($config, [
+                'project_id',
+                'key_file',
+                'key_file_path',
+                'projectId',
+                'keyFile',
+                'keyFilePath',
+                'path_prefix',
+                'pathPrefix',
+                'bucket',
+                'visibility',
+                'apiEndpoint',
+                'metadata',
+            ]);
 
-        /* @var FilesystemManager $factory */
-        $factory->extend('gcs', function ($_app, $config) {
-            $adapter = $this->createAdapter($config);
+            $config += ['version' => 'v2'];
 
-            return $this->createFilesystem($adapter, $config);
+            $client = $this->createClient($config);
+            $adapter = $this->createAdapter($client, $config);
+
+            return new GoogleCloudStorageAdapter(
+                new Flysystem($adapter, $config),
+                $adapter,
+                $config,
+                $client,
+            );
         });
     }
 
-    protected function createAdapter(array $config): GoogleCloudStorageAdapter
+    protected function createAdapter(StorageClient $client, array $config): GCSAdapter
     {
-        $storageClient = $this->createClient($config);
+        $bucket = $client->bucket(Arr::get($config, 'bucket'));
+        $pathPrefix = Arr::get($config, 'pathPrefix', Arr::get($config, 'path_prefix'));
+        $visibility = Arr::get($config, 'visibility');
+        $defaultVisibility = in_array(
+            $visibility,
+            [
+                Visibility::PRIVATE,
+                Visibility::PUBLIC,
+            ]
+        ) ? $visibility : Visibility::PRIVATE;
 
-        $bucket = $storageClient->bucket($config['bucket']);
-
-        $pathPrefix = Arr::get($config, 'path_prefix');
-        $storageApiUri = Arr::get($config, 'storage_api_uri');
-
-        return new GoogleCloudStorageAdapter($storageClient, $bucket, $pathPrefix, $storageApiUri);
-    }
-
-    protected function createFilesystem(AdapterInterface $adapter, array $config): Filesystem
-    {
-        $cache = Arr::pull($config, 'cache');
-
-        $config = Arr::only($config, ['visibility', 'disable_asserts', 'url', 'metadata']);
-
-        if ($cache) {
-            $adapter = new CachedAdapter($adapter, $this->createCacheStore($cache));
-        }
-
-        return new Filesystem($adapter, count($config) > 0 ? $config : null);
-    }
-
-    protected function createCacheStore(array | bool $config): CacheInterface
-    {
-        if ($config === true) {
-            return new MemoryStore();
-        }
-
-        return new Cache(
-            $this->app->get('cache')->store($config['store']),
-            Arr::get($config, 'prefix', 'flysystem'),
-            Arr::get($config, 'expire')
-        );
+        return new GCSAdapter($bucket, $pathPrefix, null, $defaultVisibility);
     }
 
     protected function createClient(array $config): StorageClient
     {
         $options = [];
 
-        if ($keyFilePath = Arr::get($config, 'key_file_path')) {
+        if ($keyFilePath = Arr::get($config, 'keyFilePath', Arr::get($config, 'key_file_path'))) {
             $options['keyFilePath'] = $keyFilePath;
         }
 
-        if ($keyFile = Arr::get($config, 'key_file')) {
+        if ($keyFile = Arr::get($config, 'keyFile', Arr::get($config, 'key_file'))) {
             $options['keyFile'] = $keyFile;
         }
 
-        if ($projectId = Arr::get($config, 'project_id')) {
+        if ($projectId = Arr::get($config, 'projectId', Arr::get($config, 'project_id'))) {
             $options['projectId'] = $projectId;
         }
 
