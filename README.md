@@ -7,14 +7,9 @@
 
 ---
 
-Google Cloud Storage filesystem driver for Laravel 8 (using Flysystem v1).
+Google Cloud Storage filesystem driver for Laravel 9 (using Flysystem v2 and its own GCS adapter).
 
-This started as a fork from [Superbalist/laravel-google-cloud-storage](https://github.com/Superbalist/laravel-google-cloud-storage). Changes include:
-
-- Laravel 8 and PHP 8 only support
-- Merging some long overdue PRs
-- Re-wrote the service provider
-- Basically only the readme is left from the fork :shrug:
+**Looking for Laravel 8 support? Use the `v1` branch!**
 
 ## Support us
 
