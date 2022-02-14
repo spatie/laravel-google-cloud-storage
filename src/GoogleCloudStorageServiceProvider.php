@@ -15,6 +15,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     public function boot()
     {
         Storage::extend('gcs', function ($_app, $config) {
+            $config = $this->prepareConfig($config);
             $client = $this->createClient($config);
             $adapter = $this->createAdapter($client, $config);
 
@@ -31,7 +32,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     {
         $bucket = $client->bucket(Arr::get($config, 'bucket'));
 
-        $pathPrefix = Arr::get($config, 'pathPrefix') ?? Arr::get($config, 'path_prefix') ?? '';
+        $pathPrefix = Arr::get($config, 'root');
         $visibility = Arr::get($config, 'visibility');
         $defaultVisibility = in_array(
             $visibility,
@@ -48,20 +49,45 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
     {
         $options = [];
 
-        // Google's SDK expects camelCase keys, but we (often) use snake_case in the config.
-
-        if ($keyFilePath = Arr::get($config, 'keyFilePath', Arr::get($config, 'key_file_path'))) {
+        if ($keyFilePath = Arr::get($config, 'keyFilePath')) {
             $options['keyFilePath'] = $keyFilePath;
         }
 
-        if ($keyFile = Arr::get($config, 'keyFile', Arr::get($config, 'key_file'))) {
+        if ($keyFile = Arr::get($config, 'keyFile')) {
             $options['keyFile'] = $keyFile;
         }
 
-        if ($projectId = Arr::get($config, 'projectId', Arr::get($config, 'project_id'))) {
+        if ($projectId = Arr::get($config, 'projectId')) {
             $options['projectId'] = $projectId;
         }
 
         return new StorageClient($options);
+    }
+
+    private function prepareConfig(array $config): array
+    {
+        // Set root prefix to '' if none of the prefix params has been set
+        if (! Arr::hasAny($config, ['root', 'pathPrefix', 'path_prefix'])) {
+            $config['root'] = '';
+        } // only reset root if it wasn't provided in the configuration
+        elseif (! Arr::has($config, 'root') && Arr::hasAny($config, ['pathPrefix', 'path_prefix'])) {
+            $config['root'] = Arr::get($config, 'pathPrefix') ?? Arr::get($config, 'path_prefix');
+        }
+
+        // Google's SDK expects camelCase keys, but we (often) use snake_case in the config.
+
+        if ($keyFilePath = Arr::get($config, 'keyFilePath', Arr::get($config, 'key_file_path'))) {
+            $config['keyFilePath'] = $keyFilePath;
+        }
+
+        if ($keyFile = Arr::get($config, 'keyFile', Arr::get($config, 'key_file'))) {
+            $config['keyFile'] = $keyFile;
+        }
+
+        if ($projectId = Arr::get($config, 'projectId', Arr::get($config, 'project_id'))) {
+            $config['projectId'] = $projectId;
+        }
+
+        return $config;
     }
 }
