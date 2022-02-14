@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.0.1 - 2022-02-14
+
+## What's Changed
+
+- Fix testbench dependency in CI by @mmachatschek in https://github.com/spatie/laravel-google-cloud-storage/pull/7
+- Use path prefix for temporary URLs by @mmachatschek in https://github.com/spatie/laravel-google-cloud-storage/pull/6
+- Add fallbacks for path prefix as root by @mmachatschek in https://github.com/spatie/laravel-google-cloud-storage/pull/5
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.0.0...2.0.1
+
 ## 2.0.0 - 2022-02-09
 
 ## What's Changed
