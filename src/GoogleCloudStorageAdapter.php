@@ -57,7 +57,7 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
      */
     public function temporaryUrl($path, $expiration, array $options = [])
     {
-        return $this->getBucket()->object($path)->signedUrl($expiration, $options);
+        return $this->getBucket()->object($this->prefixer->prefixPath($path))->signedUrl($expiration, $options);
     }
 
     private function getBucket(): Bucket
