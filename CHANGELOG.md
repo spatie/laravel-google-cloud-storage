@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.0.2 - 2022-02-15
+
+## What's Changed
+
+- Updated default value for path_prefix by @gcg in https://github.com/spatie/laravel-google-cloud-storage/pull/8
+
+## New Contributors
+
+- @gcg made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/8
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.0.1...2.0.2
+
 ## 2.0.1 - 2022-02-14
 
 ## What's Changed
