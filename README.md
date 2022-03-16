@@ -132,6 +132,20 @@ $url = $disk->temporaryUrl('folder/my_file.txt', now()->addMinutes(30));
 // https://storage.googleapis.com/test-bucket/folder/my_file.txt?GoogleAccessId=test-bucket%40test-gcp.iam.gserviceaccount.com&Expires=1571151576&Signature=tvxN1OS1txkWAUF0cCR3FWK%seRZXtFu42%04%YZACYL2zFQxA%uwdGEmdO1KgsHR3vBF%I9KaEzPbl4b7ic2IWUuo8Jh3IoZFqdTQec3KypjDtt%02DGwm%OO6pWDVV421Yp4z520%o5oMqGBtV8B3XmjW2PH76P3uID2QY%AlFxn23oE9PBoM2wXr8pDXhMPwZNJ0FtckSc26O8PmfVsG7Jvln%CQTU57IFyB7JnNxz5tQpc2hPTHbCGrcxVPEISvdOamW3I%83OsXr5raaYYBPcuumDnAmrK%cyS9%Ky2fL2B2shFO2cz%KRu79DBPqtnP2Zf1mJWBTwxVUCK2jxEEYcXBXtdOszIvlI6%tp2XfVwYxLNFU
 ```
 
+## Uniform bucket-level access
+
+Google Cloud Storagre allows setting permissions at the bucket level i.e. "Uniform bucket-level access".
+
+Initially, the error "Cannot insert legacy ACL for an object when uniform bucket-level access is enabled" is observed.
+
+When uploading files to such buckets ensure the visibility within the configuration file is set as follows:
+
+```php
+use League\Flysystem\GoogleCloudStorage\PortableVisibilityHandler;
+// ...
+'visibility' => PortableVisibilityHandler::NO_PREDEFINED_VISIBILITY,
+```
+
 Please see https://cloud.google.com/storage/docs/access-control/signed-urls and https://laravel.com/docs/6.x/filesystem for more info.
 
 ## Testing
