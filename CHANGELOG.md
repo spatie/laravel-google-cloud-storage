@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.0.3 - 2022-04-06
+
+## What's Changed
+
+- Uniform bucket-level access by @ultrono in https://github.com/spatie/laravel-google-cloud-storage/pull/17
+- Fix api endpoint configuration by @hotrush in https://github.com/spatie/laravel-google-cloud-storage/pull/19
+
+## New Contributors
+
+- @ultrono made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/17
+- @hotrush made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/19
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.0.2...2.0.3
+
 ## 2.0.2 - 2022-02-15
 
 ## What's Changed
