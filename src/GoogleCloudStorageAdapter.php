@@ -40,8 +40,8 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
     {
         $apiEndpoint = rtrim(Rest::DEFAULT_API_ENDPOINT, '/').'/'.ltrim(Arr::get($this->config, 'bucket'), '/');
 
-        if (isset($this->config['apiEndpoint'])) {
-            $apiEndpoint = $this->config['apiEndpoint'];
+        if (isset($this->config['url'])) {
+            $apiEndpoint = $this->config['url'];
         }
 
         return $this->concatPathToUrl($apiEndpoint, $this->prefixer->prefixPath($path));
