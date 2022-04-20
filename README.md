@@ -10,7 +10,7 @@
 
 ---
 
-Google Cloud Storage filesystem driver for Laravel 9 (using Flysystem v2 and its own GCS adapter).
+Google Cloud Storage filesystem driver for Laravel 9 (using Flysystem v3 and its own GCS adapter).
 
 **Looking for Laravel 8 support? Use the `v1` branch!**
 
