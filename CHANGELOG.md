@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 1.1.0 - 2022-04-28
+
+- Add support for copying files with uniform ACLs enabled
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/1.0.1...1.1.0
+
 ## 2.0.3 - 2022-04-06
 
 ## What's Changed
