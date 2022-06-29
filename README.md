@@ -134,7 +134,7 @@ $url = $disk->temporaryUrl('folder/my_file.txt', now()->addMinutes(30));
 
 ## Uniform bucket-level access
 
-Google Cloud Storagre allows setting permissions at the bucket level i.e. "Uniform bucket-level access".
+Google Cloud Storage allows setting permissions at the bucket level i.e. "Uniform bucket-level access".
 
 Initially, the error "Cannot insert legacy ACL for an object when uniform bucket-level access is enabled" is observed.
 
