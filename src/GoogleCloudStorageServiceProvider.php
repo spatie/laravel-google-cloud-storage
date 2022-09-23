@@ -60,7 +60,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         if ($projectId = Arr::get($config, 'projectId')) {
             $options['projectId'] = $projectId;
         }
-        
+
         if ($apiEndpoint = Arr::get($config, 'apiEndpoint')) {
             $options['apiEndpoint'] = $apiEndpoint;
         }
@@ -96,8 +96,8 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
             $config['apiEndpoint'] = $apiEndpoint;
         }
 
-        if ($storageApiUrl = Arr::get($config, 'storage_api_uri')) {
-            $config['storageApiUrl'] = $storageApiUrl;
+        if ($storageApiUri = Arr::get($config, 'storage_api_uri')) {
+            $config['storageApiUri'] = $storageApiUri;
         }
 
         return $config;
