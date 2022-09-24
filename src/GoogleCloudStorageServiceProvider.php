@@ -92,8 +92,12 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
             $config['projectId'] = $projectId;
         }
 
-        if ($apiEndpoint = Arr::get($config, 'apiEndpoint', Arr::get($config, 'storage_api_uri'))) {
+        if ($apiEndpoint = Arr::get($config, 'apiEndpoint')) {
             $config['apiEndpoint'] = $apiEndpoint;
+        }
+
+        if ($storageApiUri = Arr::get($config, 'storage_api_uri')) {
+            $config['storageApiUri'] = $storageApiUri;
         }
 
         return $config;
