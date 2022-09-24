@@ -2,6 +2,24 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.0.4 - 2022-09-24
+
+### What's Changed
+
+- Update README.md by @veneliniliev in https://github.com/spatie/laravel-google-cloud-storage/pull/20
+- Update README.md: `Flysystem v2` -> `Flysystem v3` by @MohannadNaj in https://github.com/spatie/laravel-google-cloud-storage/pull/26
+- Typo in README by @careybaird in https://github.com/spatie/laravel-google-cloud-storage/pull/33
+- fix incorrect usage of storageApiUri / apiEndpoint config by @Rkallenkoot in https://github.com/spatie/laravel-google-cloud-storage/pull/46
+
+### New Contributors
+
+- @veneliniliev made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/20
+- @MohannadNaj made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/26
+- @careybaird made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/33
+- @Rkallenkoot made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/46
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.0.3...2.0.4
+
 ## 1.1.0 - 2022-04-28
 
 - Add support for copying files with uniform ACLs enabled
