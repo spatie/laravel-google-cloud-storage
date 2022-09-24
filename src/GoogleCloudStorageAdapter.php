@@ -60,6 +60,7 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
         if (isset($this->config['storageApiUri'])) {
             $options['bucketBoundHostname'] = $this->config['storageApiUri'];
         }
+
         return $this->getBucket()->object($this->prefixer->prefixPath($path))->signedUrl($expiration, $options);
     }
 
