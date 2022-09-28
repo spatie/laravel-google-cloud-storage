@@ -68,7 +68,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         return new StorageClient($options);
     }
 
-    private function prepareConfig(array $config): array
+    protected function prepareConfig(array $config): array
     {
         // Set root prefix to '' if none of the prefix params has been set
         if (! Arr::hasAny($config, ['root', 'pathPrefix', 'path_prefix'])) {
