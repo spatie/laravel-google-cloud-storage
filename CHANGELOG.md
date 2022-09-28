@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.0.5 - 2022-09-28
+
+### What's Changed
+
+- make `prepareConfig` method protected instead of private by @Nielsvanpach in https://github.com/spatie/laravel-google-cloud-storage/pull/50
+
+### New Contributors
+
+- @Nielsvanpach made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/50
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.0.4...2.0.5
+
 ## 2.0.4 - 2022-09-24
 
 ### What's Changed
