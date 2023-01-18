@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudStorageAdapter;
+use League\Flysystem\GoogleCloudStorage\PortableVisibilityHandler;
+use League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility;
 use League\Flysystem\Visibility;
 
 class GoogleCloudStorageServiceProvider extends ServiceProvider
@@ -34,15 +36,21 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
 
         $pathPrefix = Arr::get($config, 'root');
         $visibility = Arr::get($config, 'visibility');
-        $defaultVisibility = in_array(
-            $visibility,
-            [
-                Visibility::PRIVATE,
-                Visibility::PUBLIC,
-            ]
-        ) ? $visibility : Visibility::PRIVATE;
+        if ($visibility === UniformBucketLevelAccessVisibility::NO_PREDEFINED_VISIBILITY) {
+            $visibilityHandler = new UniformBucketLevelAccessVisibility();
+            $defaultVisibility = UniformBucketLevelAccessVisibility::NO_PREDEFINED_VISIBILITY;
+        } else {
+            $visibilityHandler = new PortableVisibilityHandler();
+            $defaultVisibility = in_array(
+                $visibility,
+                [
+                    Visibility::PRIVATE,
+                    Visibility::PUBLIC,
+                ]
+            ) ? $visibility : Visibility::PRIVATE;
+        }
 
-        return new FlysystemGoogleCloudStorageAdapter($bucket, $pathPrefix, null, $defaultVisibility);
+        return new FlysystemGoogleCloudStorageAdapter($bucket, $pathPrefix, $visibilityHandler, $defaultVisibility);
     }
 
     protected function createClient(array $config): StorageClient

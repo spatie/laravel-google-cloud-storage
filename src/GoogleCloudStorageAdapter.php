@@ -15,17 +15,13 @@ use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGo
  */
 class GoogleCloudStorageAdapter extends FilesystemAdapter
 {
-    protected StorageClient $client;
-
     public function __construct(
         FilesystemOperator $driver,
         FlysystemGoogleCloudAdapter $adapter,
         array $config,
-        StorageClient $client
+        protected StorageClient $client
     ) {
         parent::__construct($driver, $adapter, $config);
-
-        $this->client = $client;
     }
 
     /**
@@ -62,6 +58,11 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
         }
 
         return $this->getBucket()->object($this->prefixer->prefixPath($path))->signedUrl($expiration, $options);
+    }
+
+    public function getClient(): StorageClient
+    {
+        return $this->client;
     }
 
     private function getBucket(): Bucket
