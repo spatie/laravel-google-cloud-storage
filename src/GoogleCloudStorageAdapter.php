@@ -10,9 +10,6 @@ use Illuminate\Support\Arr;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudAdapter;
 
-/**
- * Ignore missing interface methods. They are due to a @mixin annotation in FilesystemAdapter.
- */
 class GoogleCloudStorageAdapter extends FilesystemAdapter
 {
     public function __construct(
