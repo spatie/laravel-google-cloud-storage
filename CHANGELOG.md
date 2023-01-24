@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.1.0 - 2023-01-24
+
+### What's Changed
+
+- Add option for uniform bucket level access using the `visibility_handler` config by @rwinzhang in https://github.com/spatie/laravel-google-cloud-storage/pull/55
+
+### New Contributors
+
+- @alexanderpostma made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/52
+- @rwinzhang made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/55
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.0.5...2.1.0
+
 ## 2.0.5 - 2022-09-28
 
 ### What's Changed
