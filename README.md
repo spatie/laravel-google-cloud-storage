@@ -143,8 +143,6 @@ Initially, the error "Cannot insert legacy ACL for an object when uniform bucket
 When uploading files to such buckets ensure the `visibility_handler` within the configuration file is set as follows:
 
 ```php
-use League\Flysystem\GoogleCloudStorage\PortableVisibilityHandler;
-// ...
 'visibility_handler' => \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class,
 ```
 
