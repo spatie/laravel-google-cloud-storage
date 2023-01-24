@@ -43,6 +43,7 @@ Next, add a new disk to your `filesystems.php` config:
     'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null), // see: Public URLs below
     'apiEndpoint' => env('GOOGLE_CLOUD_STORAGE_API_ENDPOINT', null), // set storageClient apiEndpoint
     'visibility' => 'public', // optional: public|private
+    'visibility_handler' => null, // optional: set to \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class to enable uniform bucket level access
     'metadata' => ['cacheControl'=> 'public,max-age=86400'], // optional: default metadata
 ],
 ```
@@ -139,12 +140,12 @@ Google Cloud Storage allows setting permissions at the bucket level i.e. "Unifor
 
 Initially, the error "Cannot insert legacy ACL for an object when uniform bucket-level access is enabled" is observed.
 
-When uploading files to such buckets ensure the visibility within the configuration file is set as follows:
+When uploading files to such buckets ensure the `visibility_handler` within the configuration file is set as follows:
 
 ```php
 use League\Flysystem\GoogleCloudStorage\PortableVisibilityHandler;
 // ...
-'visibility' => PortableVisibilityHandler::NO_PREDEFINED_VISIBILITY,
+'visibility_handler' => \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class,
 ```
 
 Please see https://cloud.google.com/storage/docs/access-control/signed-urls and https://laravel.com/docs/6.x/filesystem for more info.
