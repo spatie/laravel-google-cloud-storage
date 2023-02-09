@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.0 - 2023-02-09
+
+### What's Changed
+
+- Add support for Laravel 10 + run tests with php 8.2 by @Nielsvanpach in https://github.com/spatie/laravel-google-cloud-storage/pull/59
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.1.0...2.2.0
+
 ## 2.1.0 - 2023-01-24
 
 ### What's Changed
