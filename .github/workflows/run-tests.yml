@@ -1,4 +1,4 @@
-name: run-tests
+name: Tests
 
 on: [push, pull_request]
 
@@ -18,6 +18,9 @@ jobs:
         include:
           - laravel: 10.*
             testbench: ^8.0
+        exclude:
+          - laraval: 10.*
+            php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
