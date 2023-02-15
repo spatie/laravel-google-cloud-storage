@@ -57,6 +57,23 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
         return $this->getBucket()->object($this->prefixer->prefixPath($path))->signedUrl($expiration, $options);
     }
 
+    /**
+     * Get a temporary upload URL for the file at the given path.
+     *
+     * @param  string  $path
+     * @param  \DateTimeInterface  $expiration
+     * @param  array  $options
+     * @return string
+     */
+    public function temporaryUploadUrl($path, $expiration, array $options = [])
+    {
+        if (isset($this->config['storageApiUri'])) {
+            $options['bucketBoundHostname'] = $this->config['storageApiUri'];
+        }
+
+        return $this->getBucket()->object($this->prefixer->prefixPath($path))->beginSignedUploadSession($options);
+    }
+
     public function getClient(): StorageClient
     {
         return $this->client;
