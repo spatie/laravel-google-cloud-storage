@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.1 - 2023-02-17
+
+### What's Changed
+
+- feat: create temporaryUploadUrl method by @Baiquette in https://github.com/spatie/laravel-google-cloud-storage/pull/60
+
+### New Contributors
+
+- @Baiquette made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/60
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.0...2.2.1
+
 ## 2.2.0 - 2023-02-09
 
 ### What's Changed
