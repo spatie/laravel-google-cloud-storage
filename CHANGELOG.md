@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.2 - 2023-04-06
+
+### What's Changed
+
+- Bump dependencies for Laravel 10 by @chrillep in https://github.com/spatie/laravel-google-cloud-storage/pull/62
+
+### New Contributors
+
+- @chrillep made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/62
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.1...2.2.2
+
 ## 2.2.1 - 2023-02-17
 
 ### What's Changed
