@@ -83,4 +83,14 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
     {
         return $this->client->bucket(Arr::get($this->config, 'bucket'));
     }
+
+    /**
+     * Determine if temporary URLs can be generated.
+     *
+     * @return bool
+     */
+    public function providesTemporaryUrls(): bool
+    {
+        return true;
+    }
 }
