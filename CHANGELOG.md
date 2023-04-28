@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.3 - 2023-04-28
+
+### What's Changed
+
+- add missing providesTemporaryUrls method by @mortalkiller in https://github.com/spatie/laravel-google-cloud-storage/pull/66
+
+### New Contributors
+
+- @mortalkiller made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/66
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.2...2.2.3
+
 ## 2.2.2 - 2023-04-06
 
 ### What's Changed
