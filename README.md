@@ -110,7 +110,7 @@ $url = $disk->url('folder/my_file.txt');
 // http://storage.googleapis.com/bucket-name/path-prefix/folder/my_file.txt
 ```
 
-If you configure a custom `apiEndpoint` in your config:
+If you configure a custom `storage_api_uri` in your config:
 ```php
 $disk = Storage::disk('gcs');
 $url = $disk->url('folder/my_file.txt');
