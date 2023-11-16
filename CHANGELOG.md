@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.4 - 2023-11-16
+
+### What's Changed
+
+- update README.md - storage_api_uri by @veneliniliev in https://github.com/spatie/laravel-google-cloud-storage/pull/69
+- Allow config in snake and camel case by @beschoenen in https://github.com/spatie/laravel-google-cloud-storage/pull/77
+
+### New Contributors
+
+- @beschoenen made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/77
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.3...2.2.4
+
 ## 2.2.3 - 2023-04-28
 
 ### What's Changed
