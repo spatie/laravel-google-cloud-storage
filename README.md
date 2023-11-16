@@ -2,7 +2,6 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-google-cloud-storage.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-cloud-storage)
 [![run-tests](https://github.com/spatie/laravel-google-cloud-storage/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-google-cloud-storage/actions/workflows/run-tests.yml)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-google-cloud-storage/Check%20&%20fix%20styling/main?label=code%20style)](https://github.com/spatie/laravel-google-cloud-storage/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-google-cloud-storage.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-google-cloud-storage)
 
 ---
