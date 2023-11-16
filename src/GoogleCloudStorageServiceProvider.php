@@ -6,6 +6,7 @@ use Google\Cloud\Storage\StorageClient;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudStorageAdapter;
 use League\Flysystem\Visibility;
@@ -34,7 +35,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
 
         $pathPrefix = Arr::get($config, 'root');
         $visibility = Arr::get($config, 'visibility');
-        $visibilityHandlerClass = Arr::get($config, 'visibility_handler');
+        $visibilityHandlerClass = Arr::get($config, 'visibilityHandler');
         $visibilityHandler = $visibilityHandlerClass ? new $visibilityHandlerClass() : null;
 
         $defaultVisibility = in_array(
@@ -73,34 +74,13 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
 
     protected function prepareConfig(array $config): array
     {
-        // Set root prefix to '' if none of the prefix params has been set
-        if (! Arr::hasAny($config, ['root', 'pathPrefix', 'path_prefix'])) {
-            $config['root'] = '';
-        } // only reset root if it wasn't provided in the configuration
-        elseif (! Arr::has($config, 'root') && Arr::hasAny($config, ['pathPrefix', 'path_prefix'])) {
-            $config['root'] = Arr::get($config, 'pathPrefix') ?? Arr::get($config, 'path_prefix');
+        // Google's SDK expects camelCase keys, but we can use snake_case in the config.
+        foreach ($config as $key => $value) {
+            $config[Str::camel($key)] = $value;
         }
 
-        // Google's SDK expects camelCase keys, but we (often) use snake_case in the config.
-
-        if ($keyFilePath = Arr::get($config, 'keyFilePath', Arr::get($config, 'key_file_path'))) {
-            $config['keyFilePath'] = $keyFilePath;
-        }
-
-        if ($keyFile = Arr::get($config, 'keyFile', Arr::get($config, 'key_file'))) {
-            $config['keyFile'] = $keyFile;
-        }
-
-        if ($projectId = Arr::get($config, 'projectId', Arr::get($config, 'project_id'))) {
-            $config['projectId'] = $projectId;
-        }
-
-        if ($apiEndpoint = Arr::get($config, 'apiEndpoint')) {
-            $config['apiEndpoint'] = $apiEndpoint;
-        }
-
-        if ($storageApiUri = Arr::get($config, 'storage_api_uri')) {
-            $config['storageApiUri'] = $storageApiUri;
+        if (! Arr::has($config, 'root')) {
+            $config['root'] = Arr::get($config, 'pathPrefix') ?? '';
         }
 
         return $config;

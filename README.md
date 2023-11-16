@@ -38,10 +38,10 @@ Next, add a new disk to your `filesystems.php` config:
     'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET', 'your-bucket'),
     'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''), // optional: /default/path/to/apply/in/bucket
     'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null), // see: Public URLs below
-    'apiEndpoint' => env('GOOGLE_CLOUD_STORAGE_API_ENDPOINT', null), // set storageClient apiEndpoint
+    'api_endpoint' => env('GOOGLE_CLOUD_STORAGE_API_ENDPOINT', null), // set storageClient apiEndpoint
     'visibility' => 'public', // optional: public|private
     'visibility_handler' => null, // optional: set to \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class to enable uniform bucket level access
-    'metadata' => ['cacheControl'=> 'public,max-age=86400'], // optional: default metadata
+    'metadata' => ['cacheControl' => 'public,max-age=86400'], // optional: default metadata
 ],
 ```
 
