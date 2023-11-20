@@ -31,8 +31,11 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
      */
     public function url($path)
     {
-        $storageApiUri = $this->config['storageApiUri']
-            ?? rtrim(Rest::DEFAULT_API_ENDPOINT, '/').'/'.ltrim(Arr::get($this->config, 'bucket'), '/');
+        $storageApiUri = rtrim(Rest::DEFAULT_API_ENDPOINT, '/').'/'.ltrim(Arr::get($this->config, 'bucket'), '/');
+
+        if ($this->config['storageApiUri']) {
+            $storageApiUri = $this->config['storageApiUri'];
+        }
 
         return $this->concatPathToUrl($storageApiUri, $this->prefixer->prefixPath($path));
     }
@@ -47,7 +50,7 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
      */
     public function temporaryUrl($path, $expiration, array $options = [])
     {
-        if (! empty($this->config['storageApiUri'])) {
+        if ($this->config['storageApiUri']) {
             $options['bucketBoundHostname'] = $this->config['storageApiUri'];
         }
 
@@ -64,7 +67,7 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
      */
     public function temporaryUploadUrl($path, $expiration, array $options = [])
     {
-        if (! empty($this->config['storageApiUri'])) {
+        if ($this->config['storageApiUri']) {
             $options['bucketBoundHostname'] = $this->config['storageApiUri'];
         }
 
