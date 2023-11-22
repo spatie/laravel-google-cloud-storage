@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.5 - 2023-11-22
+
+### What's Changed
+
+- Fixes #78 - Fix generating url when storage api url is missing by @beschoenen in https://github.com/spatie/laravel-google-cloud-storage/pull/79
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.4...2.2.5
+
 ## 2.2.4 - 2023-11-16
 
 ### What's Changed
