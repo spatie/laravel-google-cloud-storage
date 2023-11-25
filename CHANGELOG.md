@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.2.6 - 2023-11-25
+
+### What's Changed
+
+* Use Arr::get to access all config entries by @beschoenen in https://github.com/spatie/laravel-google-cloud-storage/pull/81
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.5...2.2.6
+
 ## 2.2.5 - 2023-11-22
 
 ### What's Changed
