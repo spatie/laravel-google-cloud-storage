@@ -17,15 +17,15 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/contracts": "^9.0|^10.0",
-        "illuminate/filesystem": "^9.0|^10.0",
-        "illuminate/support": "^9.0|^10.0",
+        "illuminate/contracts": "^9.0|^10.0|^11.0",
+        "illuminate/filesystem": "^9.0|^10.0|^11.0",
+        "illuminate/support": "^9.0|^10.0|^11.0",
         "league/flysystem-google-cloud-storage": "^3.0.15"
     },
     "require-dev": {
         "brianium/paratest": "^6.4",
-        "nunomaduro/collision": "^6.1|^7.0",
-        "orchestra/testbench": "^7.0|^8.0",
+        "nunomaduro/collision": "^6.1|^7.0|^8.0",
+        "orchestra/testbench": "^7.0|^8.0|^9.0",
         "phpunit/phpunit": "^9.6|^10.0",
         "spatie/laravel-ray": "^1.29",
         "vimeo/psalm": "^4.18|^5.9"
