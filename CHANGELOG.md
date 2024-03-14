@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.3.0 - 2024-03-14
+
+### What's Changed
+
+* Add support for laravel 11 by @shuvroroy in https://github.com/spatie/laravel-google-cloud-storage/pull/84
+
+### New Contributors
+
+* @shuvroroy made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/84
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.2.6...2.3.0
+
 ## 2.2.6 - 2023-11-25
 
 ### What's Changed
