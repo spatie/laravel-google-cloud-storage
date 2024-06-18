@@ -65,7 +65,7 @@ See https://laravel.com/docs/master/filesystem for full list of available functi
 
 The Google Client uses a few methods to determine how it should authenticate with the Google API.
 
-1. If you specify a path in the key `key_file` in  disk config, that json credentials file will be used.
+1. If you specify a path in the key `key_file_path` in  disk config, that json credentials file will be used.
 2. If the `GOOGLE_APPLICATION_CREDENTIALS` env var is set, it will use that.
    ```php
    putenv('GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json');
