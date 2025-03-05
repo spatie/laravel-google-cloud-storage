@@ -31,10 +31,15 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
      */
     public function url($path)
     {
-        $storageApiUri = rtrim(Rest::DEFAULT_API_ENDPOINT, '/').'/'.ltrim(Arr::get($this->config, 'bucket'), '/');
+        // Get the storage API URI from the configuration trim the trailing slash
+        $storageApiUri = rtrim(Arr::get($this->config, 'storageApiUri'), '/');
 
-        if (Arr::get($this->config, 'storageApiUri')) {
-            $storageApiUri = Arr::get($this->config, 'storageApiUri');
+        // Get the bucket name from the configuration
+        $bucketName = Arr::get($this->config, 'bucket');
+
+        // Construct the URL using the bucket name
+        if ($bucketName) {
+            $storageApiUri = "{$storageApiUri}/{$bucketName}";
         }
 
         return $this->concatPathToUrl($storageApiUri, $this->prefixer->prefixPath($path));

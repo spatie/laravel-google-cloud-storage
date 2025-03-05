@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.4.0 - 2025-03-04
+
+### What's Changed
+
+* Fix url method using bucket name and storageApiUri due to Rest::DEFAULT_API_ENDPOINT is deprecated by @neoformalex in https://github.com/spatie/laravel-google-cloud-storage/pull/91
+
+### New Contributors
+
+* @neoformalex made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/91
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.3.1...2.4.0
+
 ## 2.3.1 - 2025-02-24
 
 ### What's Changed
