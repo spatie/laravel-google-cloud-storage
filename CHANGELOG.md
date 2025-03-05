@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.3.2 - 2025-03-05
+
+### What's Changed
+
+* Improve Google Cloud Storage URL generation logic using bucket name by @neoformalex in https://github.com/spatie/laravel-google-cloud-storage/pull/103
+
+### New Contributors
+
+* @neoformalex made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/103
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.3.1...2.3.2
+
 ## 2.4.0 - 2025-03-04
 
 ### What's Changed
