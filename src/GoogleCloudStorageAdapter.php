@@ -16,8 +16,7 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
         FlysystemGoogleCloudAdapter $adapter,
         array $config,
         protected StorageClient $client
-    )
-    {
+    ) {
         parent::__construct($driver, $adapter, $config);
     }
 
