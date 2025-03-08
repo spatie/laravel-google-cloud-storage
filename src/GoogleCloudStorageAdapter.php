@@ -16,29 +16,26 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
         FlysystemGoogleCloudAdapter $adapter,
         array $config,
         protected StorageClient $client
-    ) {
+    )
+    {
         parent::__construct($driver, $adapter, $config);
     }
 
     /**
      * Get the URL for the file at the given path.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return string
      *
      * @throws \RuntimeException
      */
     public function url($path)
     {
-        // Get the storage API URI from the configuration trim the trailing slash
-        $storageApiUri = rtrim(Arr::get($this->config, 'storageApiUri'), '/');
+        $storageApiUri = rtrim(Rest::DEFAULT_API_ENDPOINT, '/') . '/' . ltrim(Arr::get($this->config, 'bucket'), '/');
 
-        // Get the bucket name from the configuration
-        $bucketName = Arr::get($this->config, 'bucket');
-
-        // Construct the URL using the bucket name
-        if ($bucketName) {
-            $storageApiUri = "{$storageApiUri}/{$bucketName}";
+        if (Arr::get($this->config, 'storageApiUri')) {
+            $storageApiUri = Arr::get($this->config, 'storageApiUri');
         }
 
         return $this->concatPathToUrl($storageApiUri, $this->prefixer->prefixPath($path));
@@ -47,9 +44,10 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
     /**
      * Get a temporary URL for the file at the given path.
      *
-     * @param  string  $path
-     * @param  \DateTimeInterface  $expiration
-     * @param  array  $options
+     * @param string $path
+     * @param \DateTimeInterface $expiration
+     * @param array $options
+     *
      * @return string
      */
     public function temporaryUrl($path, $expiration, array $options = [])
@@ -64,9 +62,10 @@ class GoogleCloudStorageAdapter extends FilesystemAdapter
     /**
      * Get a temporary upload URL for the file at the given path.
      *
-     * @param  string  $path
-     * @param  \DateTimeInterface  $expiration
-     * @param  array  $options
+     * @param string $path
+     * @param \DateTimeInterface $expiration
+     * @param array $options
+     *
      * @return string
      */
     public function temporaryUploadUrl($path, $expiration, array $options = [])
