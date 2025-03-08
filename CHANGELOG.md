@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.3.3 - 2025-03-08
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.3.2...2.3.3
+
 ## 2.3.2 - 2025-03-05
 
 ### What's Changed
