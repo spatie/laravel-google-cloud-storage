@@ -7,6 +7,7 @@ use Google\Cloud\Storage\StorageClient;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use League\Flysystem\FilesystemOperator;
+use Google\Cloud\Storage\Connection\Rest;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudAdapter;
 
 class GoogleCloudStorageAdapter extends FilesystemAdapter
