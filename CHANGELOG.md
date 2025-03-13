@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.3.4 - 2025-03-13
+
+### What's Changed
+
+* fix: missing import Spatie\GoogleCloudStorage\Rest by @jimnguyendev in https://github.com/spatie/laravel-google-cloud-storage/pull/106
+
+### New Contributors
+
+* @jechaviz1 made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/109
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.3.3...2.3.4
+
 ## 2.3.3 - 2025-03-08
 
 **Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.3.2...2.3.3
