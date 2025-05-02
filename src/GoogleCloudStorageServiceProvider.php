@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Filesystem\FilesystemManager;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudStorageAdapter;
 use League\Flysystem\Visibility;
@@ -15,7 +16,9 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Storage::extend('gcs', function ($_app, $config) {
+        /** @var FilesystemManager $filesystem */
+        $filesystem = $this->app->make('filesystem');
+        $filesystem->extend('gcs', function ($app, $config) {
             $config = $this->prepareConfig($config);
             $client = $this->createClient($config);
             $adapter = $this->createAdapter($client, $config);
