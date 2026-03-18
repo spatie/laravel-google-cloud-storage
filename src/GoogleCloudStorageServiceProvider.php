@@ -15,10 +15,12 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Storage::extend('gcs', function ($_app, $config) {
-            $config = $this->prepareConfig($config);
-            $client = $this->createClient($config);
-            $adapter = $this->createAdapter($client, $config);
+        $provider = $this;
+
+        Storage::extend('gcs', function ($_app, $config) use ($provider) {
+            $config = $provider->prepareConfig($config);
+            $client = $provider->createClient($config);
+            $adapter = $provider->createAdapter($client, $config);
 
             return new GoogleCloudStorageAdapter(
                 new Flysystem($adapter, $config),
@@ -29,7 +31,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         });
     }
 
-    protected function createAdapter(StorageClient $client, array $config): FlysystemGoogleCloudStorageAdapter
+    public function createAdapter(StorageClient $client, array $config): FlysystemGoogleCloudStorageAdapter
     {
         $bucket = $client->bucket(Arr::get($config, 'bucket'));
 
@@ -49,7 +51,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         return new FlysystemGoogleCloudStorageAdapter($bucket, $pathPrefix, $visibilityHandler, $defaultVisibility);
     }
 
-    protected function createClient(array $config): StorageClient
+    public function createClient(array $config): StorageClient
     {
         $options = [];
 
@@ -72,7 +74,7 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         return new StorageClient($options);
     }
 
-    protected function prepareConfig(array $config): array
+    public function prepareConfig(array $config): array
     {
         // Google's SDK expects camelCase keys, but we can use snake_case in the config.
         foreach ($config as $key => $value) {
