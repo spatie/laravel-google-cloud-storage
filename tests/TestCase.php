@@ -7,19 +7,14 @@ use Spatie\GoogleCloudStorage\GoogleCloudStorageServiceProvider;
 
 class TestCase extends Orchestra
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             GoogleCloudStorageServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('filesystem.default', 'gcs');
     }
