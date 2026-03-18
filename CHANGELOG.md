@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.4.1 - 2026-03-18
+
+### What's Changed
+
+* Fix creating gcs disk in laravel v13 by @gdebrauwer in https://github.com/spatie/laravel-google-cloud-storage/pull/115
+
+### New Contributors
+
+* @gdebrauwer made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/115
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.4.0...2.4.1
+
 ## 2.3.4 - 2025-03-13
 
 ### What's Changed
