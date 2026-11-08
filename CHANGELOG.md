@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-google-cloud-storage` will be documented in this file.
 
+## 2.4.2 - 2026-11-08
+
+### What's Changed
+
+* Test PHP 8.5 and 8.6 with Pest 5 by @freekmurze in https://github.com/spatie/laravel-google-cloud-storage/pull/116
+* Store files of scoped disks under the scoped prefix by @riasvdv in https://github.com/spatie/laravel-google-cloud-storage/pull/117
+
+### New Contributors
+
+* @riasvdv made their first contribution in https://github.com/spatie/laravel-google-cloud-storage/pull/117
+
+**Full Changelog**: https://github.com/spatie/laravel-google-cloud-storage/compare/2.4.1...2.4.2
+
 ## 2.4.1 - 2026-03-18
 
 ### What's Changed
