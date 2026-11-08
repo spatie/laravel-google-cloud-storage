@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter as FlysystemGoogleCloudStorageAdapter;
+use League\Flysystem\PathPrefixer;
 use League\Flysystem\Visibility;
 
 class GoogleCloudStorageServiceProvider extends ServiceProvider
@@ -36,6 +37,11 @@ class GoogleCloudStorageServiceProvider extends ServiceProvider
         $bucket = $client->bucket(Arr::get($config, 'bucket'));
 
         $pathPrefix = Arr::get($config, 'root');
+
+        if ($prefix = Arr::get($config, 'prefix')) {
+            $pathPrefix = (new PathPrefixer($pathPrefix ?? ''))->prefixPath($prefix);
+        }
+
         $visibility = Arr::get($config, 'visibility');
         $visibilityHandlerClass = Arr::get($config, 'visibilityHandler');
         $visibilityHandler = $visibilityHandlerClass ? new $visibilityHandlerClass() : null;
